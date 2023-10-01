@@ -1,9 +1,15 @@
 import 'package:dio/dio.dart';
-import 'models/coin_model.dart';
+import 'package:my_app/repositories/coins/coins.dart';
 
-class CoinsRepository {
+class CoinsRepository implements AbstractCoinsRepository {
+  CoinsRepository ({
+    required this.dio,
+  });
+  final Dio dio;
+
+  @override
   Future<List<CoinModel>> getCoinsList() async {
-    final response = await Dio().get(
+    final response = await dio.get(
         'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BNB,BSV,DOG,AAC,DOV,CAG&tsyms=USD');
     final data = response.data as Map<String, dynamic>;
     final dataRaw = data['RAW'] as Map<String, dynamic>;

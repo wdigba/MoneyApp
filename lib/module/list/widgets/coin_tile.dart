@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
 import '../../../repositories/coins/models/coin_model.dart';
 
 class CoinTile extends StatelessWidget {

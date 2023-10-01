@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../repositories/coins/coins_repository.dart';
-import '../../../repositories/coins/models/coin_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import '../../../repositories/coins/coins.dart';
+import '../bloc/list_bloc.dart';
 import '../widgets/widgets.dart';
+import 'package:my_app/theme/theme.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -12,10 +15,12 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   List<CoinModel>? coinsList;
+  final theme = darkTheme;
+  final listBloc = ListBloc(GetIt.I<AbstractCoinsRepository>());
 
   @override
   void initState() {
-    loadCoins();
+    listBloc.add(LoadList());
     super.initState();
   }
 
@@ -26,24 +31,56 @@ class _ListScreenState extends State<ListScreen> {
         title: const Text('MyMoneyList'),
         centerTitle: true,
       ),
-      body: (coinsList == null)
-          ? const Center(child: CircularProgressIndicator()):
-      ListView.separated(
-        padding: const EdgeInsets.only(top: 16),
-        itemCount: coinsList!.length,
-        separatorBuilder: (context, index) => const Divider(),
-        itemBuilder: (context, i) {
-          final coin = coinsList![i];
-          return CoinTile(coin : coin);
-        },
+      body: BlocBuilder<ListBloc, ListState> (
+        bloc: listBloc,
+        builder: (context, state) {
+          if(state is ListLoaded) {
+            return ListView.separated(
+              padding: const EdgeInsets.only(top: 16),
+              itemCount: state.coinsList.length,
+              separatorBuilder: (context, index) => const Divider(),
+              itemBuilder: (context, i) {
+              final coin = state.coinsList[i];
+              return CoinTile(coin : coin);
+              },
+            );
+          }
+          if (state is ListLoadingFailure) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Something went wrong',
+                    style: theme.textTheme.headlineMedium,
+                  ),
+                  Text(
+                    'Please try again later',
+                    style: theme.textTheme.labelSmall?.copyWith(fontSize: 16),
+                  )
+                ],
+              )
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        }
       ),
+
+
+      //(coinsList == null)
+      //    ? const Center(child: CircularProgressIndicator()):
+      //ListView.separated(
+      //  padding: const EdgeInsets.only(top: 16),
+        //itemCount: coinsList!.length,
+        //separatorBuilder: (context, index) => const Divider(),
+        //itemBuilder: (context, i) {
+          //final coin = coinsList![i];
+         // return CoinTile(coin : coin);
+        //},
+      //),
     );
   }
-  Future<void> loadCoins() async {
-    coinsList = await CoinsRepository().getCoinsList();
-    setState(() {});
-  }
-
 }
 
 
