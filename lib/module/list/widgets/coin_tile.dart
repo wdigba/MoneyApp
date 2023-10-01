@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../repositories/coins/models/coin_model.dart';
+
 class CoinTile extends StatelessWidget {
-  const CoinTile ({Key? key,
-    required this.coinName,
+  const CoinTile ({
+    Key? key,
+    required this.coin,
   }) : super(key: key);
 
-  final String coinName;
+  final CoinModel coin;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ListTile(
-      leading: SvgPicture.asset(
-        'assets/svg/bitcoin-btc-logo.svg',
-        height: 30,
-        width: 30,
-      ),
+      leading: Image.network(coin.imageUrl),
       title: Text(
-        coinName,
+        coin.name,
         style: theme.textTheme.bodyMedium,
       ),
       subtitle: Text(
-        '500\$',
+        '${coin.priceInUSD} \$',
         style: theme.textTheme.labelSmall,
       ),
       trailing: const Icon(
@@ -31,7 +30,7 @@ class CoinTile extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed(
           '/coin',
-          arguments: coinName ,
+          arguments: coin,
         );
       },
     );
