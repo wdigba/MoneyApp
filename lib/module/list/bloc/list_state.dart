@@ -1,10 +1,16 @@
 part of 'list_bloc.dart';
 
-class ListState {}
+abstract class ListState extends Equatable {}
 
-class ListInitial extends ListState {}
+class ListInitial extends ListState {
+  @override
+  List<Object?> get props => [];
+}
 
-class ListLoading extends ListState {}
+class ListLoading extends ListState {
+  @override
+  List<Object?> get props => [];
+}
 
 class ListLoaded extends ListState {
   ListLoaded({
@@ -12,6 +18,9 @@ class ListLoaded extends ListState {
   });
 
   final List<CoinModel> coinsList;
+
+  @override
+  List<Object?> get props => [coinsList];
 }
 
 class ListLoadingFailure extends ListState {
@@ -19,4 +28,7 @@ class ListLoadingFailure extends ListState {
     this.exception
   });
   final Object? exception;
+
+  @override
+  List<Object?> get props => [exception];
 }

@@ -1,4 +1,6 @@
-class CoinModel {
+import 'package:equatable/equatable.dart';
+
+class CoinModel extends Equatable{
   const CoinModel({
     required this.name,
     required this.priceInUSD,
@@ -8,4 +10,7 @@ class CoinModel {
   final String name;
   final double priceInUSD;
   final String imageUrl;
+
+  @override
+  List<Object?> get props => [name, priceInUSD, imageUrl];
 }

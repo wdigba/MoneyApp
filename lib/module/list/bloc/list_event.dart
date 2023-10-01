@@ -1,5 +1,13 @@
 part of 'list_bloc.dart';
 
-class ListEvent {}
+abstract class ListEvent extends Equatable {}
 
-class LoadList extends ListEvent {}
+class LoadList extends ListEvent {
+  LoadList({
+    this.completer,
+  });
+  final Completer? completer;
+
+  @override
+  List<Object?> get props => [completer];
+}

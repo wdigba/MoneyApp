@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import '../../../repositories/coins/coins.dart';
 import '../bloc/list_bloc.dart';
 import '../widgets/widgets.dart';
-import 'package:my_app/theme/theme.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -15,23 +16,29 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   List<CoinModel>? coinsList;
-  final theme = darkTheme;
   final listBloc = ListBloc(GetIt.I<AbstractCoinsRepository>());
 
   @override
   void initState() {
-    listBloc.add(LoadList());
+    listBloc.add(LoadList());;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('MyMoneyList'),
         centerTitle: true,
       ),
-      body: BlocBuilder<ListBloc, ListState> (
+      body: RefreshIndicator (
+        onRefresh: () async {
+          final completer = Completer();
+          listBloc.add(LoadList(completer: completer));
+          return completer.future;
+        },
+      child : BlocBuilder<ListBloc, ListState> (
         bloc: listBloc,
         builder: (context, state) {
           if(state is ListLoaded) {
@@ -58,7 +65,14 @@ class _ListScreenState extends State<ListScreen> {
                   Text(
                     'Please try again later',
                     style: theme.textTheme.labelSmall?.copyWith(fontSize: 16),
-                  )
+                  ),
+                  const SizedBox(height: 30),
+                  TextButton(
+                      onPressed: () {
+                        listBloc.add(LoadList());
+                      },
+                      child: const Text('Try again')
+                  ),
                 ],
               )
             );
@@ -66,19 +80,7 @@ class _ListScreenState extends State<ListScreen> {
           return const Center(child: CircularProgressIndicator());
         }
       ),
-
-
-      //(coinsList == null)
-      //    ? const Center(child: CircularProgressIndicator()):
-      //ListView.separated(
-      //  padding: const EdgeInsets.only(top: 16),
-        //itemCount: coinsList!.length,
-        //separatorBuilder: (context, index) => const Divider(),
-        //itemBuilder: (context, i) {
-          //final coin = coinsList![i];
-         // return CoinTile(coin : coin);
-        //},
-      //),
+      )
     );
   }
 }
