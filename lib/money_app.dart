@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:my_app/router/router.dart';
 import 'package:my_app/theme/theme.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 class MoneyApp extends StatelessWidget {
   const MoneyApp({super.key});
@@ -12,6 +14,9 @@ class MoneyApp extends StatelessWidget {
       title: 'MyMoneyList',
       theme: darkTheme,
       routes: routes,
+      navigatorObservers: [
+        TalkerRouteObserver(GetIt.I<Talker>()),
+      ],
     );
   }
 }

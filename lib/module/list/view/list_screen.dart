@@ -60,7 +60,7 @@ class _ListScreenState extends State<ListScreen> {
                 children: [
                   Text(
                     'Something went wrong',
-                    style: theme.textTheme.headlineMedium,
+                    style: theme.textTheme.headlineMedium?.copyWith(color: Colors.white),
                   ),
                   Text(
                     'Please try again later',

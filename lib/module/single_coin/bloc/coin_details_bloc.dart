@@ -30,8 +30,9 @@ class CoinDetailsBloc
       final coinDetails =  await coinsRepository.getCoinDetails(event.currencyCode);
 
       emit(CoinDetailsLoaded(coinDetails));
-    } catch (e) {
+    } catch (e, st) {
       emit(CoinDetailsLoadingFailure(e));
+      GetIt.I<Talker>().handle(e, st);
     }
   }
 
