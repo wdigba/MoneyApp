@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 import '../../../repositories/coins/coins.dart';
 import '../bloc/list_bloc.dart';
 import '../widgets/widgets.dart';
@@ -31,6 +32,19 @@ class _ListScreenState extends State<ListScreen> {
       appBar: AppBar(
         title: const Text('MyMoneyList'),
         centerTitle: true,
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => TalkerScreen(
+                  talker: GetIt.I<Talker>()
+              )
+              ),
+            );
+          }, icon: const Icon(
+            Icons.document_scanner_outlined,
+          )
+          )
+        ],
       ),
       body: RefreshIndicator (
         onRefresh: () async {
