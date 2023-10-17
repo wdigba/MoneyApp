@@ -21,7 +21,7 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   void initState() {
-    listBloc.add(LoadList());;
+    listBloc.add(LoadList());
     super.initState();
   }
 

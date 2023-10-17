@@ -43,10 +43,13 @@ dependencies:
   talker_flutter: ^3.5.1
   talker_dio_logger: ^2.3.0
   talker_bloc_logger: ^2.2.0
+  json_annotation: ^4.8.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  json_serializable: ^6.7.1
+  build_runner:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

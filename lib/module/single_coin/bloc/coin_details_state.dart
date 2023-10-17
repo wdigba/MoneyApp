@@ -14,7 +14,7 @@ class CoinDetailsLoading extends CoinDetailsState {
 class CoinDetailsLoaded extends CoinDetailsState {
   const CoinDetailsLoaded(this.coin);
 
-  final CoinDetail coin;
+  final CoinModel coin;
 
   @override
   List<Object?> get props => [coin];
