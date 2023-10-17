@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'coin_detail.g.dart';
 
+@HiveType(typeId: 1)
 @JsonSerializable()
 
 class CoinDetail extends Equatable{
@@ -15,26 +17,32 @@ class CoinDetail extends Equatable{
     required this.low24Hour,
   });
 
+  @HiveField(0)
   @JsonKey(name: 'PRICE')
   final double priceInUSD;
 
+  @HiveField(1)
   @JsonKey(name: 'IMAGEURL')
   final String imageUrl;
 
   String get fullImageUrl => 'https://www.cryptocompare.com/$imageUrl/';
 
+  @HiveField(2)
   @JsonKey(name: 'TOSYMBOL')
   final String toSymbol;
 
+  @HiveField(3)
   @JsonKey(name: 'LASTUPDATE',
       toJson: _dateTimeToJson,
       fromJson: _dateTimeFromJson,
   )
   final DateTime lastUpdate;
 
+  @HiveField(4)
   @JsonKey(name: 'HIGH24HOUR')
   final double high24Hour;
 
+  @HiveField(5)
   @JsonKey(name: 'LOW24HOUR')
   final double low24Hour;
 

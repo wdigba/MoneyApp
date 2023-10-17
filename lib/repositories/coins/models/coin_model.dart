@@ -1,5 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 import 'package:my_app/repositories/coins/models/coin_detail.dart';
+
+part 'coin_model.g.dart';
+
+@HiveType(typeId: 2)
 
 class CoinModel extends Equatable{
   const CoinModel({
@@ -7,7 +12,9 @@ class CoinModel extends Equatable{
     required this.details,
   });
 
+  @HiveField(0)
   final String name;
+  @HiveField(1)
   final CoinDetail details;
 
   @override

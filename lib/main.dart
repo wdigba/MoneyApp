@@ -3,19 +3,28 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_app/repositories/coins/coins.dart';
-import 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
-import 'package:talker_bloc_logger/talker_bloc_logger_settings.dart';
-import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
-import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
+import 'package:my_app/repositories/coins/models/coin_detail.dart';
+import 'package:talker_bloc_logger/talker_bloc_logger.dart';
+import 'package:talker_dio_logger/talker_dio_logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'money_app.dart';
 import 'package:dio/dio.dart';
 
-void main() {
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final talker = TalkerFlutter.init();
   GetIt.I.registerSingleton(talker);
   GetIt.I<Talker>().debug('Talker started');
+
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(CoinModelAdapter());
+  Hive.registerAdapter(CoinDetailAdapter());
+
+  final coinsBox = await Hive.openBox<CoinModel>('coins_box');
 
   final dio = Dio();
   dio.interceptors.add(
