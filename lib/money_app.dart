@@ -4,19 +4,26 @@ import 'package:my_app/router/router.dart';
 import 'package:my_app/theme/theme.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
-class MoneyApp extends StatelessWidget {
+class MoneyApp extends StatefulWidget {
   const MoneyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MoneyApp> createState() => MoneyAppState();
+}
+
+class MoneyAppState extends State<MoneyApp> {
+  final appRouter = AppRouter();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'MyMoneyList',
       theme: darkTheme,
-      routes: routes,
-      navigatorObservers: [
+      routerConfig: appRouter.config(
+        navigatorObservers: () => [
         TalkerRouteObserver(GetIt.I<Talker>()),
       ],
+      ),
     );
   }
 }
