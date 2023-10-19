@@ -12,19 +12,18 @@ import 'package:talker_flutter/talker_flutter.dart';
 import 'money_app.dart';
 import 'package:dio/dio.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final talker = TalkerFlutter.init();
   GetIt.I.registerSingleton(talker);
   GetIt.I<Talker>().debug('Talker started');
-
+  const coinsBoxName = 'coins_box';
   await Hive.initFlutter();
 
   Hive.registerAdapter(CoinModelAdapter());
   Hive.registerAdapter(CoinDetailAdapter());
 
-  final coinsBox = await Hive.openBox<CoinModel>('coins_box');
+  final coinsBox = await Hive.openBox<CoinModel>(coinsBoxName);
 
   final dio = Dio();
   dio.interceptors.add(
@@ -45,7 +44,7 @@ Future<void> main() async {
   );
 
   GetIt.I.registerLazySingleton<AbstractCoinsRepository>(
-          () => CoinsRepository(dio: Dio()));
+          () => CoinsRepository(dio: dio, coinsBox: coinsBox));
 
   FlutterError.onError =
       (details) => GetIt.I<Talker>().handle(details.exception, details.stack);
