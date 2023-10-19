@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_app/repositories/coins/models/coin_detail.dart';
 
 part 'coin_model.g.dart';
