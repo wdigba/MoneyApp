@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/router/router.dart';
 import '../../../repositories/coins/models/coin_model.dart';
 
 class CoinTile extends StatelessWidget {
@@ -27,10 +29,13 @@ class CoinTile extends StatelessWidget {
           Icons.arrow_forward_ios
       ),
       onTap: () {
-        Navigator.of(context).pushNamed(
+        AutoRouter.of(context).push(CoinRoute(coin: coin));
+        /*Navigator.of(context).pushNamed(
           '/coin',
           arguments: coin,
         );
+
+         */
       },
     );
   }

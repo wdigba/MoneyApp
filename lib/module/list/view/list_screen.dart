@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -7,6 +7,8 @@ import 'package:talker_flutter/talker_flutter.dart';
 import '../../../repositories/coins/coins.dart';
 import '../bloc/list_bloc.dart';
 import '../widgets/widgets.dart';
+
+@RoutePage()
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});

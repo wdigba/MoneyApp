@@ -1,9 +1,12 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import '../../../repositories/coins/abstract_coins_repository.dart';
 import '../../../repositories/coins/models/coin_model.dart';
 import '../bloc/coin_details_bloc.dart';
+
+@RoutePage()
 
 class CoinScreen extends StatefulWidget {
   const CoinScreen({
@@ -18,7 +21,7 @@ class CoinScreen extends StatefulWidget {
 }
 
 class _CoinScreenState extends State<CoinScreen> {
-  // CryptoCoin? coin;
+  //CoinModel? coin;
 
   final _coinDetailsBloc = CoinDetailsBloc(
     GetIt.I<AbstractCoinsRepository>(),
