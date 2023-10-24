@@ -48,7 +48,7 @@ class CoinsRepository implements AbstractCoinsRepository {
       priceInUSD: price,
       imageUrl: 'https://www.cryptocompare.com/$imageUrl',
       toSymbol: toSymbol,
-      lastUpdate: lastUpdate,
+      lastUpdate: DateTime.fromMillisecondsSinceEpoch(lastUpdate),
       high24Hour: high24Hour,
       low24Hour: low24Hour,
     );

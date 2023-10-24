@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'coin_model.dart';
+
 class CoinDetail extends Equatable{
   const CoinDetail({
     required this.name,
@@ -15,7 +17,7 @@ class CoinDetail extends Equatable{
   final double priceInUSD;
   final String imageUrl;
   final String toSymbol;
-  final String lastUpdate;
+  final DateTime lastUpdate;
   final double high24Hour;
   final double low24Hour;
 
