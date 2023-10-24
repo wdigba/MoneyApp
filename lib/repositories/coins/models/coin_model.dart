@@ -10,13 +10,16 @@ class CoinModel extends Equatable{
   const CoinModel({
     required this.name,
     required this.details,
+    required this.imageUrl,
   });
 
   @HiveField(0)
   final String name;
   @HiveField(1)
   final CoinDetail details;
+  @HiveField(2)
+  final String imageUrl;
 
   @override
-  List<Object> get props => [name, details];
+  List<Object> get props => [name, details, imageUrl];
 }

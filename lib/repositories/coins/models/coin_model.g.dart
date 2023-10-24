@@ -19,17 +19,20 @@ class CoinModelAdapter extends TypeAdapter<CoinModel> {
     return CoinModel(
       name: fields[0] as String,
       details: fields[1] as CoinDetail,
+      imageUrl: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, CoinModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.details);
+      ..write(obj.details)
+      ..writeByte(2)
+      ..write(obj.imageUrl);
   }
 
   @override

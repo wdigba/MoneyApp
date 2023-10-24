@@ -19,7 +19,7 @@ class CoinsRepository implements AbstractCoinsRepository {
   Future<List<CoinModel>> getCoinsList() async {
     var dataList = <CoinModel>[];
     try {
-      final dataList = await fetchCoinsListFromApi();
+      dataList = await fetchCoinsListFromApi();
       final coinsMap = {for (var e in dataList) e.name:e};
       await coinsBox.putAll(coinsMap);
     }
@@ -33,18 +33,18 @@ class CoinsRepository implements AbstractCoinsRepository {
 
   Future<List<CoinModel>> fetchCoinsListFromApi() async {
   final response = await dio.get(
-  'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BNB,BSV,DOG,AAC,DOV,CAG&tsyms=USD');
+  'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BNB,SOL,AID,CAG,DOV&tsyms=USD');
   final data = response.data as Map<String, dynamic>;
   final dataRaw = data['RAW'] as Map<String, dynamic>;
-  final dataList = dataRaw.entries
-      .map((e) {
+  final dataList = dataRaw.entries.map((e) {
   final usdData = (e.value as Map<String, dynamic>) ['USD'] as Map<String, dynamic>;
+  final imageUrl = usdData['IMAGEURL'];
   final details = CoinDetail.fromJson(usdData);
   return CoinModel(
   name: e.key,
   details: details,
-  );})
-      .toList();
+    imageUrl: 'https://www.cryptocompare.com/$imageUrl',
+  );}).toList();
   return dataList;
   }
 
@@ -68,11 +68,13 @@ class CoinsRepository implements AbstractCoinsRepository {
     final dataRaw = data['RAW'] as Map<String, dynamic>;
     final coinData = dataRaw[currencyCode] as Map<String, dynamic>;
     final usdData = coinData['USD'] as Map<String, dynamic>;
+    final imageUrl = usdData['IMAGEURL'];
     final details = CoinDetail.fromJson(usdData);
 
     return CoinModel(
         name: currencyCode,
         details: details,
+        imageUrl: 'https://www.cryptocompare.com/$imageUrl'
     );
   }
 }

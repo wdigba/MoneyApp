@@ -33,15 +33,6 @@ class _CoinScreenState extends State<CoinScreen> {
     super.initState();
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   final args = ModalRoute.of(context)?.settings.arguments;
-  //   assert(args != null && args is CryptoCoin, 'You must provide String args');
-  //   coin = args as CryptoCoin;
-  //   _coinDetailsBloc.add(LoadCryptoCoinDetails(currencyCode: coin!.name));
-  //   super.didChangeDependencies();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,42 +122,3 @@ class _DataRow extends StatelessWidget {
     );
   }
 }
-/*import 'dart:developer';
-import 'package:flutter/material.dart';
-
-class CoinScreen extends StatefulWidget {
-  const CoinScreen({super.key});
-
-  @override
-  State<CoinScreen> createState() => CoinScreenState();
-}
-
-class CoinScreenState extends State<CoinScreen> {
-  String? coinName;
-
-  @override
-  void didChangeDependencies() {
-    final args = ModalRoute.of(context)?.settings.arguments;
-    if(args == null) {
-      log('you must provide args');
-      return;
-    }
-    if(args is! String) {
-      log('you must provide String args');
-      return;
-    }
-    coinName = args;
-    setState(() {});
-    super.didChangeDependencies();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(coinName ??  '...'),
-        centerTitle: true,
-      ),
-    );
-  }
-}*/
