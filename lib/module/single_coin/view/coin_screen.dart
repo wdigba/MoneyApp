@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -6,31 +5,31 @@ import '../../../repositories/coins/abstract_coins_repository.dart';
 import '../../../repositories/coins/models/coin_model.dart';
 import '../bloc/coin_details_bloc.dart';
 
-@RoutePage()
 
 class CoinScreen extends StatefulWidget {
   const CoinScreen({
     super.key,
-    required this.coin,
   });
 
-  final CoinModel coin;
 
   @override
   State<CoinScreen> createState() => _CoinScreenState();
 }
 
 class _CoinScreenState extends State<CoinScreen> {
-  //CoinModel? coin;
+  CoinModel? coin;
 
   final _coinDetailsBloc = CoinDetailsBloc(
     GetIt.I<AbstractCoinsRepository>(),
   );
 
   @override
-  void initState() {
-    _coinDetailsBloc.add(LoadCoinDetails(currencyCode: widget.coin.name));
-    super.initState();
+  void didChangeDependencies() {
+    final args = ModalRoute.of(context)?.settings.arguments;
+    assert(args != null && args is CoinModel, 'You must provide String args');
+    coin = args as CoinModel;
+    _coinDetailsBloc.add(LoadCoinDetails(currencyCode: coin!.name));
+    super.didChangeDependencies();
   }
 
   @override
@@ -41,8 +40,8 @@ class _CoinScreenState extends State<CoinScreen> {
         bloc: _coinDetailsBloc,
         builder: (context, state) {
           if (state is CoinDetailsLoaded) {
-            final coin = state.coin;
-            final coinDetails = coin.details;
+            final coinDetails = state.coinDetails;
+            //final coinDetails = coin.details;
             return Center(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,11 +49,11 @@ class _CoinScreenState extends State<CoinScreen> {
                   SizedBox(
                     height: 160,
                     width: 160,
-                    child: Image.network(coinDetails.fullImageUrl),
+                    child: Image.network(coinDetails.imageUrl),
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    coin.name,
+                    coinDetails.name,
                     style: const TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w700,
@@ -72,19 +71,20 @@ class _CoinScreenState extends State<CoinScreen> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 30),
                   SizedBox(
                     child: Column(
                       children: [
                         _DataRow(
-                          title: 'High 24 Hour',
+                          title: 'Highest for 24 hours:',
                           value: '${coinDetails.high24Hour} \$',
                         ),
-                        const SizedBox(height: 6),
-                        _DataRow(
-                          title: 'Low 24 Hour',
+                        const SizedBox(height: 20),
+                    _DataRow(
+                          title: 'Lowest for 24 hours:',
                           value: '${coinDetails.low24Hour} \$',
                         ),
-                      ],
+                     ],
                     ),
                   ),
                 ],

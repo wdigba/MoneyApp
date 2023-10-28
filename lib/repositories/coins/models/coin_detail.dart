@@ -7,6 +7,8 @@ part 'coin_detail.g.dart';
 @HiveType(typeId: 1)
 @JsonSerializable()
 
+import 'coin_model.dart';
+
 class CoinDetail extends Equatable{
   const CoinDetail({
     required this.priceInUSD,
@@ -30,16 +32,7 @@ class CoinDetail extends Equatable{
   @HiveField(2)
   @JsonKey(name: 'TOSYMBOL')
   final String toSymbol;
-
-  @HiveField(3)
-  @JsonKey(name: 'LASTUPDATE',
-      toJson: _dateTimeToJson,
-      fromJson: _dateTimeFromJson,
-  )
   final DateTime lastUpdate;
-
-  @HiveField(4)
-  @JsonKey(name: 'HIGH24HOUR')
   final double high24Hour;
 
   @HiveField(5)

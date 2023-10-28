@@ -71,10 +71,14 @@ class CoinsRepository implements AbstractCoinsRepository {
     final imageUrl = usdData['IMAGEURL'];
     final details = CoinDetail.fromJson(usdData);
 
-    return CoinModel(
-        name: currencyCode,
-        details: details,
-        imageUrl: 'https://www.cryptocompare.com/$imageUrl'
+    return CoinDetail(
+      name: currencyCode,
+      priceInUSD: price,
+      imageUrl: 'https://www.cryptocompare.com/$imageUrl',
+      toSymbol: toSymbol,
+      lastUpdate: DateTime.fromMillisecondsSinceEpoch(lastUpdate),
+      high24Hour: high24Hour,
+      low24Hour: low24Hour,
     );
   }
 }
