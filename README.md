@@ -6,7 +6,7 @@ The application contains a list of cryptocurrencies coming from an external reso
 Each currency opens onto a separate page and contains information about the name, current exchange rate, and also stores the highest and lowest value for 24 hours.
 
 # Technologies
-Block State Management
+Block State Management; 
 Talker (advanced error handler and logger)
 
 # Sources
