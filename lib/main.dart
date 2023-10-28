@@ -3,48 +3,40 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_app/repositories/coins/coins.dart';
-import 'package:my_app/repositories/coins/models/coin_detail.dart';
-import 'package:talker_bloc_logger/talker_bloc_logger.dart';
-import 'package:talker_dio_logger/talker_dio_logger.dart';
+import 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
+import 'package:talker_bloc_logger/talker_bloc_logger_settings.dart';
+import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
+import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'money_app.dart';
 import 'package:dio/dio.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+void main() {
   final talker = TalkerFlutter.init();
   GetIt.I.registerSingleton(talker);
   GetIt.I<Talker>().debug('Talker started');
-  const coinsBoxName = 'coins_box';
-  await Hive.initFlutter();
-
-  Hive.registerAdapter(CoinModelAdapter());
-  Hive.registerAdapter(CoinDetailAdapter());
-
-  final coinsBox = await Hive.openBox<CoinModel>(coinsBoxName);
 
   final dio = Dio();
   dio.interceptors.add(
       TalkerDioLogger(
-      talker: talker,
-      settings: const TalkerDioLoggerSettings(
-        printResponseData: false,
+          talker: talker,
+          settings: const TalkerDioLoggerSettings(
+            printResponseData: false,
+          )
       )
-  )
   );
 
   Bloc.observer = TalkerBlocObserver(
       talker: talker,
-    settings: const TalkerBlocLoggerSettings(
-      printStateFullData: false,
-      printEventFullData: false,
-    )
+      settings: const TalkerBlocLoggerSettings(
+        printStateFullData: false,
+        printEventFullData: false,
+      )
   );
 
   GetIt.I.registerLazySingleton<AbstractCoinsRepository>(
-          () => CoinsRepository(dio: dio, coinsBox: coinsBox));
+          () => CoinsRepository(dio: Dio()));
 
   FlutterError.onError =
       (details) => GetIt.I<Talker>().handle(details.exception, details.stack);
@@ -53,6 +45,5 @@ Future<void> main() async {
         (e, st) => GetIt.I<Talker>().handle(e, st),
   );
 }
-
 
 
