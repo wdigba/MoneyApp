@@ -76,12 +76,12 @@ class _CoinScreenState extends State<CoinScreen> {
                     child: Column(
                       children: [
                         _DataRow(
-                          title: 'High 24 Hour:',
+                          title: 'Highest for 24 hours:',
                           value: '${coinDetails.high24Hour} \$',
                         ),
                         const SizedBox(height: 20),
                     _DataRow(
-                          title: 'Low 24 Hour:',
+                          title: 'Lowest for 24 hours:',
                           value: '${coinDetails.low24Hour} \$',
                         ),
                      ],
