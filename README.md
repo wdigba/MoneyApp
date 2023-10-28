@@ -1,16 +1,13 @@
-# my_app
+# Introduction
+This project is the starting point for Flutter development in the Dart language
 
-A new Flutter project.
+# About
+The application contains a list of cryptocurrencies coming from an external resource. 
+Each currency opens onto a separate page and contains information about the name, current exchange rate, and also stores the highest and lowest value for 24 hours.
 
-## Getting Started
+# Technologies
+Block State Management; 
+Talker (advanced error handler and logger)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Sources
+https://www.youtube.com/playlist?list=PLtUuja72DaLIiIYLQP7rUjxItkDjHcSMw
