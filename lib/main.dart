@@ -18,32 +18,27 @@ void main() {
   GetIt.I<Talker>().debug('Talker started');
 
   final dio = Dio();
-  dio.interceptors.add(
-      TalkerDioLogger(
-          talker: talker,
-          settings: const TalkerDioLoggerSettings(
-            printResponseData: false,
-          )
-      )
-  );
+  dio.interceptors.add(TalkerDioLogger(
+      talker: talker,
+      settings: const TalkerDioLoggerSettings(
+        printResponseData: false,
+      )));
 
   Bloc.observer = TalkerBlocObserver(
       talker: talker,
       settings: const TalkerBlocLoggerSettings(
         printStateFullData: false,
         printEventFullData: false,
-      )
-  );
+      ));
 
   GetIt.I.registerLazySingleton<AbstractCoinsRepository>(
-          () => CoinsRepository(dio: Dio()));
+      () => CoinsRepository(dio: Dio()));
 
   FlutterError.onError =
       (details) => GetIt.I<Talker>().handle(details.exception, details.stack);
 
-  runZonedGuarded(() => runApp(const MoneyApp()),
-        (e, st) => GetIt.I<Talker>().handle(e, st),
+  runZonedGuarded(
+    () => runApp(const MoneyApp()),
+    (e, st) => GetIt.I<Talker>().handle(e, st),
   );
 }
-
-

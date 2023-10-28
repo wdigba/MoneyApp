@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class CoinModel extends Equatable{
+class CoinModel extends Equatable {
   const CoinModel({
     required this.name,
     required this.priceInUSD,

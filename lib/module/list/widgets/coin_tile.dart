@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../repositories/coins/models/coin_model.dart';
 
 class CoinTile extends StatelessWidget {
-  const CoinTile ({
+  const CoinTile({
     Key? key,
     required this.coin,
   }) : super(key: key);
@@ -22,9 +22,7 @@ class CoinTile extends StatelessWidget {
         '${coin.priceInUSD} \$',
         style: theme.textTheme.labelSmall,
       ),
-      trailing: const Icon(
-          Icons.arrow_forward_ios
-      ),
+      trailing: const Icon(Icons.arrow_forward_ios),
       onTap: () {
         Navigator.of(context).pushNamed(
           '/coin',
@@ -33,5 +31,4 @@ class CoinTile extends StatelessWidget {
       },
     );
   }
-
 }

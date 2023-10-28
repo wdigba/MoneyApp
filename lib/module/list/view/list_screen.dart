@@ -21,7 +21,8 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   void initState() {
-    listBloc.add(LoadList());;
+    listBloc.add(LoadList());
+    ;
     super.initState();
   }
 
@@ -33,69 +34,66 @@ class _ListScreenState extends State<ListScreen> {
           title: const Text('MyMoneyList'),
           centerTitle: true,
           actions: [
-            IconButton(onPressed: (){
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => TalkerScreen(
-                    talker: GetIt.I<Talker>()
-                )
-                ),
-              );
-            }, icon: const Icon(
-              Icons.document_scanner_outlined,
-            )
-            )
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TalkerScreen(talker: GetIt.I<Talker>())),
+                  );
+                },
+                icon: const Icon(
+                  Icons.document_scanner_outlined,
+                ))
           ],
         ),
-        body: RefreshIndicator (
+        body: RefreshIndicator(
           onRefresh: () async {
             final completer = Completer();
             listBloc.add(LoadList(completer: completer));
             return completer.future;
           },
-          child : BlocBuilder<ListBloc, ListState> (
+          child: BlocBuilder<ListBloc, ListState>(
               bloc: listBloc,
               builder: (context, state) {
-                if(state is ListLoaded) {
+                if (state is ListLoaded) {
                   return ListView.separated(
                     padding: const EdgeInsets.only(top: 16),
                     itemCount: state.coinsList.length,
                     separatorBuilder: (context, index) => const Divider(),
                     itemBuilder: (context, i) {
                       final coin = state.coinsList[i];
-                      return CoinTile(coin : coin);
+                      return CoinTile(coin: coin);
                     },
                   );
                 }
                 if (state is ListLoadingFailure) {
                   return Center(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Something went wrong',
-                            style: theme.textTheme.headlineMedium?.copyWith(color: Colors.white),
-                          ),
-                          Text(
-                            'Please try again later',
-                            style: theme.textTheme.labelSmall?.copyWith(fontSize: 16),
-                          ),
-                          const SizedBox(height: 30),
-                          TextButton(
-                              onPressed: () {
-                                listBloc.add(LoadList());
-                              },
-                              child: const Text('Try again')
-                          ),
-                        ],
-                      )
-                  );
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Something went wrong',
+                        style: theme.textTheme.headlineMedium
+                            ?.copyWith(color: Colors.white),
+                      ),
+                      Text(
+                        'Please try again later',
+                        style:
+                            theme.textTheme.labelSmall?.copyWith(fontSize: 16),
+                      ),
+                      const SizedBox(height: 30),
+                      TextButton(
+                          onPressed: () {
+                            listBloc.add(LoadList());
+                          },
+                          child: const Text('Try again')),
+                    ],
+                  ));
                 }
                 return const Center(child: CircularProgressIndicator());
-              }
-          ),
-        )
-    );
+              }),
+        ));
   }
 }
-

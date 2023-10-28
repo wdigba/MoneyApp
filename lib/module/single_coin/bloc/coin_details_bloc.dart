@@ -7,27 +7,27 @@ import 'package:talker/talker.dart';
 import '../../../repositories/coins/models/coin_detail.dart';
 
 part 'coin_details_event.dart';
+
 part 'coin_details_state.dart';
 
-class CoinDetailsBloc
-    extends Bloc<CoinDetailsEvent, CoinDetailsState> {
-  CoinDetailsBloc(this.coinsRepository)
-      : super(const CoinDetailsState()) {
+class CoinDetailsBloc extends Bloc<CoinDetailsEvent, CoinDetailsState> {
+  CoinDetailsBloc(this.coinsRepository) : super(const CoinDetailsState()) {
     on<LoadCoinDetails>(load);
   }
 
   final AbstractCoinsRepository coinsRepository;
 
   Future<void> load(
-      LoadCoinDetails event,
-      Emitter<CoinDetailsState> emit,
-      ) async {
+    LoadCoinDetails event,
+    Emitter<CoinDetailsState> emit,
+  ) async {
     try {
       if (state is! CoinDetailsLoaded) {
         emit(const CoinDetailsLoading());
       }
 
-      final coinDetails =  await coinsRepository.getCoinDetails(event.currencyCode);
+      final coinDetails =
+          await coinsRepository.getCoinDetails(event.currencyCode);
 
       emit(CoinDetailsLoaded(coinDetails));
     } catch (e, st) {

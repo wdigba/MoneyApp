@@ -13,9 +13,7 @@ class ListLoading extends ListState {
 }
 
 class ListLoaded extends ListState {
-  ListLoaded({
-    required this.coinsList
-  });
+  ListLoaded({required this.coinsList});
 
   final List<CoinModel> coinsList;
 
@@ -24,9 +22,8 @@ class ListLoaded extends ListState {
 }
 
 class ListLoadingFailure extends ListState {
-  ListLoadingFailure({
-    this.exception
-  });
+  ListLoadingFailure({this.exception});
+
   final Object? exception;
 
   @override

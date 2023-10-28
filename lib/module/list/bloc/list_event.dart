@@ -6,6 +6,7 @@ class LoadList extends ListEvent {
   LoadList({
     this.completer,
   });
+
   final Completer? completer;
 
   @override

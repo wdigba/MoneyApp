@@ -5,12 +5,10 @@ import '../../../repositories/coins/abstract_coins_repository.dart';
 import '../../../repositories/coins/models/coin_model.dart';
 import '../bloc/coin_details_bloc.dart';
 
-
 class CoinScreen extends StatefulWidget {
   const CoinScreen({
     super.key,
   });
-
 
   @override
   State<CoinScreen> createState() => _CoinScreenState();
@@ -80,11 +78,11 @@ class _CoinScreenState extends State<CoinScreen> {
                           value: '${coinDetails.high24Hour} \$',
                         ),
                         const SizedBox(height: 20),
-                    _DataRow(
+                        _DataRow(
                           title: 'Lowest for 24 hours:',
                           value: '${coinDetails.low24Hour} \$',
                         ),
-                     ],
+                      ],
                     ),
                   ),
                 ],

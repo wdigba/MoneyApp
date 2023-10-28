@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CoinCard extends StatelessWidget {
-  const CoinCard ({
-    super.key,
-    required this.child
-  });
+  const CoinCard({super.key, required this.child});
 
   final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,9 +15,8 @@ class CoinCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: const Color.fromARGB(255, 21, 21, 21)
-      ),
+          borderRadius: BorderRadius.circular(16),
+          color: const Color.fromARGB(255, 21, 21, 21)),
       child: child,
     );
   }
